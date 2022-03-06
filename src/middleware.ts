@@ -3,12 +3,12 @@ import NodeCache from 'node-cache';
 import fetch from 'node-fetch';
 import { Response } from './types';
 
-const cache = new NodeCache();
+export const cache = new NodeCache();
 
 const BASE_URL = 'http://ergast.com/api/f1';
 const CACHE_SECONDS = 3600;
 
-async function fetchData<TApiResponse, TResponse>(
+export async function fetchData<TApiResponse, TResponse>(
     req: Request,
     res: Response<TApiResponse, TResponse>,
     next: NextFunction,
@@ -41,7 +41,7 @@ async function fetchData<TApiResponse, TResponse>(
     }
 }
 
-function returnResponse<TApiResponse, TResponse>(
+export function returnResponse<TApiResponse, TResponse>(
     req: Request,
     res: Response<TApiResponse, TResponse>,
 ) {

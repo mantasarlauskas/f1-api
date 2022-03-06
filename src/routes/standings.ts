@@ -1,15 +1,25 @@
 import { Router, Request, NextFunction } from 'express';
+import { ParsedQs } from 'qs';
 import { handleRoute } from '../middleware';
 import {
     Standings,
     Response,
     StandingsResponse,
     StandingsList,
+    ParamsDictionary,
+    ResponseBody,
+    Locals,
 } from '../types';
 
 const app = Router();
 
-app.get(
+app.get<
+    ParamsDictionary,
+    ResponseBody<StandingsList<Standings>[]>,
+    void,
+    ParsedQs,
+    Locals<StandingsResponse<Standings>, StandingsList<Standings>[]>
+>(
     '/',
     handleRoute<StandingsResponse<Standings>, StandingsList<Standings>[]>(
         (

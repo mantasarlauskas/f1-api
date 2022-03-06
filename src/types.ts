@@ -1,4 +1,4 @@
-import { Response as GenericResponse } from 'express';
+import { Response as DefaultResponse } from 'express';
 
 export interface Locals<TApiResponse, TResponse> {
     apiUrl?: string;
@@ -6,8 +6,14 @@ export interface Locals<TApiResponse, TResponse> {
     response?: TResponse;
 }
 
-export type Response<TApiResponse, TResponse> = GenericResponse<
-    TResponse | unknown,
+export interface ParamsDictionary {
+    [key: string]: string;
+}
+
+export type ResponseBody<T> = T | unknown;
+
+export type Response<TApiResponse, TResponse> = DefaultResponse<
+    ResponseBody<TResponse>,
     Locals<TApiResponse, TResponse>
 >;
 
@@ -119,6 +125,11 @@ export interface ConstructorStandings extends Standings {
     Constructor: Constructor;
 }
 
+export interface DriverStandings extends Standings {
+    Driver: Driver;
+    Constructors: Constructor[];
+}
+
 export interface Status {
     statusId: string;
     count: string;
@@ -129,6 +140,49 @@ export interface StatusResponse {
     MRData: {
         StatusTable: {
             Status: Status[];
+        };
+    };
+}
+
+interface Timing {
+    driverId: string;
+    position: string;
+    time: string;
+}
+
+interface Lap {
+    number: string;
+    Timings: Timing[];
+}
+
+export interface RaceLaps extends Race {
+    Laps: Lap[];
+}
+
+export interface LapResponse {
+    MRData: {
+        RaceTable: {
+            Races: RaceLaps[];
+        };
+    };
+}
+
+interface PitStop {
+    driverId: string;
+    lap: string;
+    stop: string;
+    time: string;
+    duration: string;
+}
+
+export interface RacePitStops extends Race {
+    PitStops: PitStop[];
+}
+
+export interface PitStopResponse {
+    MRData: {
+        RaceTable: {
+            Races: RacePitStops[];
         };
     };
 }

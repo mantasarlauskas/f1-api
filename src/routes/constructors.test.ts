@@ -9,8 +9,11 @@ jest.mock('node-fetch');
 describe('constructors', () => {
     const app = setupRouter(constructors);
     const response = getConstructors();
-    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-        new Response(JSON.stringify(response)),
+
+    beforeEach(() =>
+        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
+            new Response(JSON.stringify(response)),
+        ),
     );
 
     it('returns constructors', async () => {

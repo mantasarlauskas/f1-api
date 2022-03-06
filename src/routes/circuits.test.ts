@@ -9,8 +9,11 @@ jest.mock('node-fetch');
 describe('circuits', () => {
     const response = getCircuits();
     const app = setupRouter(circuits);
-    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-        new Response(JSON.stringify(response)),
+
+    beforeEach(() =>
+        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
+            new Response(JSON.stringify(response)),
+        ),
     );
 
     it('returns circuits', async () => {

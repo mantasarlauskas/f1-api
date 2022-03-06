@@ -9,8 +9,11 @@ jest.mock('node-fetch');
 describe('drivers', () => {
     const app = setupRouter(drivers);
     const response = getDrivers();
-    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-        new Response(JSON.stringify(response)),
+
+    beforeEach(() =>
+        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
+            new Response(JSON.stringify(response)),
+        ),
     );
 
     it('returns drivers', async () => {

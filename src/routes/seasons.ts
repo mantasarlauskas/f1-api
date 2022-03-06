@@ -1,10 +1,24 @@
 import { Router, Request, NextFunction } from 'express';
+import { ParsedQs } from 'qs';
 import { handleRoute } from '../middleware';
-import { SeasonResponse, Season, Response } from '../types';
+import {
+    SeasonResponse,
+    Season,
+    Response,
+    ParamsDictionary,
+    ResponseBody,
+    Locals,
+} from '../types';
 
 const app = Router();
 
-app.get(
+app.get<
+    ParamsDictionary,
+    ResponseBody<Season[]>,
+    void,
+    ParsedQs,
+    Locals<SeasonResponse, Season[]>
+>(
     '/',
     handleRoute<SeasonResponse, Season[]>(
         (
