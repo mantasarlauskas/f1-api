@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { ParsedQs } from 'qs';
 import routes from './commonRoutes';
 import seasons from './routes/seasons';
@@ -16,6 +17,8 @@ import {
 } from './types';
 
 const app = express();
+
+app.use(cors());
 
 const YEAR = '/:year(\\d{4})/';
 const YEAR_ROUNDS = `${YEAR}:round(\\d{1,2})/`;
