@@ -88,7 +88,8 @@ describe('commonRoutes', () => {
         const res = await request(app).get('/constructorStandings');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(
-            constructorStandings.MRData.StandingsTable.StandingsLists,
+            constructorStandings.MRData.StandingsTable.StandingsLists[0]
+                .ConstructorStandings,
         );
     });
 
@@ -101,7 +102,8 @@ describe('commonRoutes', () => {
         const res = await request(app).get('/driverStandings');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(
-            driverStandings.MRData.StandingsTable.StandingsLists,
+            driverStandings.MRData.StandingsTable.StandingsLists[0]
+                .DriverStandings,
         );
     });
 

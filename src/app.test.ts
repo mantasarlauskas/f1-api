@@ -59,7 +59,7 @@ describe('app', () => {
 
             const res = await request(app).get(url);
             expect(res.status).toEqual(200);
-            expect(res.body).toEqual(laps.MRData.RaceTable.Races);
+            expect(res.body).toEqual(laps.MRData.RaceTable.Races[0].Laps);
         },
     );
 
@@ -72,7 +72,9 @@ describe('app', () => {
 
             const res = await request(app).get(url);
             expect(res.status).toEqual(200);
-            expect(res.body).toEqual(pitStops.MRData.RaceTable.Races);
+            expect(res.body).toEqual(
+                pitStops.MRData.RaceTable.Races[0].PitStops,
+            );
         },
     );
 

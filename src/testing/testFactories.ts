@@ -8,8 +8,7 @@ import {
     ConstructorStandings,
     StatusResponse,
     DriverStandings,
-    LapResponse,
-    PitStopResponse,
+    RaceLapsResponse,
 } from '../types';
 
 export function getCircuits(): CircuitResponse {
@@ -1027,7 +1026,7 @@ export function getStatus(): StatusResponse {
     };
 }
 
-export function getLaps(): LapResponse {
+export function getLaps(): RaceLapsResponse {
     return {
         MRData: {
             RaceTable: {
@@ -1159,7 +1158,7 @@ export function getLaps(): LapResponse {
     };
 }
 
-export function getPitStops(): PitStopResponse {
+export function getPitStops(): RaceLapsResponse {
     return {
         MRData: {
             RaceTable: {

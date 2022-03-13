@@ -1,29 +1,50 @@
-import { Router } from 'express';
+import { NextFunction, Request, Router } from 'express';
 import { ParsedQs } from 'qs';
-import races from './races';
 import {
+    RaceLapsResponse,
     Locals,
     ParamsDictionary,
-    Race,
-    RaceResponse,
     ResponseBody,
+    Response,
+    Lap,
+    PitStop,
+    RaceLapsKey,
 } from '../types';
+import { handleRoute } from '../middleware';
 
 const app = Router();
 
-app.use<
+type DataType = Lap[] | PitStop[];
+
+const handler = handleRoute<RaceLapsResponse, DataType, RaceLapsKey>(
+    (
+        req: Request,
+        res: Response<RaceLapsResponse, DataType, RaceLapsKey>,
+        next: NextFunction,
+    ) => {
+        const key = res.locals.dataTypeKey;
+        if (key) {
+            res.locals.response =
+                res.locals.data?.MRData?.RaceTable?.Races?.[0]?.[key] || [];
+        }
+
+        next();
+    },
+);
+
+app.get<
     ParamsDictionary,
-    ResponseBody<Race[]>,
+    ResponseBody<DataType>,
     void,
     ParsedQs,
-    Locals<RaceResponse, Race[]>
->('/', races);
-app.use<
+    Locals<RaceLapsResponse, DataType, RaceLapsKey>
+>('/', handler);
+app.get<
     ParamsDictionary,
-    ResponseBody<Race[]>,
+    ResponseBody<DataType>,
     void,
     ParsedQs,
-    Locals<RaceResponse, Race[]>
->('/:lap(\\d{1,2})/', races);
+    Locals<RaceLapsResponse, DataType, RaceLapsKey>
+>('/:lap(\\d{1,2})/', handler);
 
 export default app;

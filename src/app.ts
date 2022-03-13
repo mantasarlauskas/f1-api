@@ -5,16 +5,17 @@ import routes from './commonRoutes';
 import seasons from './routes/seasons';
 import raceLaps from './routes/raceLaps';
 import {
-    LapResponse,
+    RaceLapsResponse,
     Locals,
     ParamsDictionary,
-    PitStopResponse,
-    RaceLaps,
-    RacePitStops,
+    Lap,
+    PitStop,
     ResponseBody,
     Season,
     SeasonResponse,
+    RaceLapsKey,
 } from './types';
+import { setDataTypeKey } from './middleware';
 
 const app = express();
 
@@ -35,17 +36,27 @@ app.use<
 >('/seasons', seasons);
 app.use<
     ParamsDictionary,
-    ResponseBody<RaceLaps[]>,
+    ResponseBody<Lap[]>,
     void,
     ParsedQs,
-    Locals<LapResponse, RaceLaps[]>
->(`${YEAR_ROUNDS}laps`, raceLaps);
+    Locals<RaceLapsResponse, Lap[], RaceLapsKey>
+>(
+    `${YEAR_ROUNDS}laps`,
+    setDataTypeKey<RaceLapsResponse, Lap[], RaceLapsKey>(RaceLapsKey.LAPS),
+    raceLaps,
+);
 app.use<
     ParamsDictionary,
-    ResponseBody<PitStopResponse[]>,
+    ResponseBody<PitStop[]>,
     void,
     ParsedQs,
-    Locals<PitStopResponse, RacePitStops[]>
->(`${YEAR_ROUNDS}pitstops`, raceLaps);
+    Locals<RaceLapsResponse, PitStop[], RaceLapsKey>
+>(
+    `${YEAR_ROUNDS}pitstops`,
+    setDataTypeKey<RaceLapsResponse, PitStop[], RaceLapsKey>(
+        RaceLapsKey.PIT_STOPS,
+    ),
+    raceLaps,
+);
 
 export default app;

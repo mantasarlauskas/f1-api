@@ -1,9 +1,20 @@
 import { Response as DefaultResponse } from 'express';
 
-export interface Locals<TApiResponse, TResponse> {
+export enum StandingsKey {
+    CONSTRUCTORS = 'ConstructorStandings',
+    DRIVERS = 'DriverStandings',
+}
+
+export enum RaceLapsKey {
+    PIT_STOPS = 'PitStops',
+    LAPS = 'Laps',
+}
+
+export interface Locals<TApiResponse, TResponse, TDataTypeKey = undefined> {
     apiUrl?: string;
     data?: TApiResponse;
     response?: TResponse;
+    dataTypeKey?: TDataTypeKey;
 }
 
 export interface ParamsDictionary {
@@ -12,9 +23,13 @@ export interface ParamsDictionary {
 
 export type ResponseBody<T> = T | unknown;
 
-export type Response<TApiResponse, TResponse> = DefaultResponse<
+export type Response<
+    TApiResponse,
+    TResponse,
+    TDataTypeKey = undefined,
+> = DefaultResponse<
     ResponseBody<TResponse>,
-    Locals<TApiResponse, TResponse>
+    Locals<TApiResponse, TResponse, TDataTypeKey>
 >;
 
 interface Location {
@@ -150,24 +165,12 @@ interface Timing {
     time: string;
 }
 
-interface Lap {
+export interface Lap {
     number: string;
     Timings: Timing[];
 }
 
-export interface RaceLaps extends Race {
-    Laps: Lap[];
-}
-
-export interface LapResponse {
-    MRData: {
-        RaceTable: {
-            Races: RaceLaps[];
-        };
-    };
-}
-
-interface PitStop {
+export interface PitStop {
     driverId: string;
     lap: string;
     stop: string;
@@ -175,14 +178,15 @@ interface PitStop {
     duration: string;
 }
 
-export interface RacePitStops extends Race {
-    PitStops: PitStop[];
+export interface RaceLaps extends Race {
+    [RaceLapsKey.LAPS]?: Lap[];
+    [RaceLapsKey.PIT_STOPS]?: PitStop[];
 }
 
-export interface PitStopResponse {
+export interface RaceLapsResponse {
     MRData: {
         RaceTable: {
-            Races: RacePitStops[];
+            Races: RaceLaps[];
         };
     };
 }

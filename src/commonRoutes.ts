@@ -20,11 +20,13 @@ import {
     Race,
     RaceResponse,
     ResponseBody,
+    StandingsKey,
     StandingsList,
     StandingsResponse,
     Status,
     StatusResponse,
 } from './types';
+import { setDataTypeKey } from './middleware';
 
 const app = Router();
 
@@ -82,8 +84,16 @@ app.use<
     ResponseBody<StandingsList<DriverStandings>[]>,
     void,
     ParsedQs,
-    Locals<StandingsResponse<DriverStandings>, StandingsList<DriverStandings>[]>
->('/driverStandings', standings);
+    Locals<StandingsResponse<DriverStandings>, DriverStandings[], StandingsKey>
+>(
+    '/driverStandings',
+    setDataTypeKey<
+        StandingsResponse<DriverStandings>,
+        DriverStandings[],
+        StandingsKey
+    >(StandingsKey.DRIVERS),
+    standings,
+);
 app.use<
     ParamsDictionary,
     ResponseBody<StandingsList<ConstructorStandings>[]>,
@@ -91,8 +101,17 @@ app.use<
     ParsedQs,
     Locals<
         StandingsResponse<ConstructorStandings>,
-        StandingsList<ConstructorStandings>[]
+        ConstructorStandings[],
+        StandingsKey
     >
->('/constructorStandings', standings);
+>(
+    '/constructorStandings',
+    setDataTypeKey<
+        StandingsResponse<ConstructorStandings>,
+        ConstructorStandings[],
+        StandingsKey
+    >(StandingsKey.CONSTRUCTORS),
+    standings,
+);
 
 export default app;

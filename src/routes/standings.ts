@@ -9,6 +9,7 @@ import {
     ParamsDictionary,
     ResponseBody,
     Locals,
+    StandingsKey,
 } from '../types';
 
 const app = Router();
@@ -18,20 +19,26 @@ app.get<
     ResponseBody<StandingsList<Standings>[]>,
     void,
     ParsedQs,
-    Locals<StandingsResponse<Standings>, StandingsList<Standings>[]>
+    Locals<StandingsResponse<Standings>, Standings[], StandingsKey>
 >(
     '/',
-    handleRoute<StandingsResponse<Standings>, StandingsList<Standings>[]>(
+    handleRoute<StandingsResponse<Standings>, Standings[], StandingsKey>(
         (
             req: Request,
             res: Response<
                 StandingsResponse<Standings>,
-                StandingsList<Standings>[]
+                Standings[],
+                StandingsKey
             >,
             next: NextFunction,
         ) => {
-            res.locals.response =
-                res.locals.data?.MRData?.StandingsTable?.StandingsLists || [];
+            const key = res.locals.dataTypeKey;
+            if (key) {
+                res.locals.response =
+                    res.locals.data?.MRData?.StandingsTable
+                        ?.StandingsLists?.[0]?.[key] || [];
+            }
+
             next();
         },
     ),

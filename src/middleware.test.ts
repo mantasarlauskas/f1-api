@@ -1,6 +1,12 @@
 import fetch, { Response } from 'node-fetch';
 import { createMocks } from 'node-mocks-http';
-import { fetchData, cache, returnResponse, handleRoute } from './middleware';
+import {
+    fetchData,
+    cache,
+    returnResponse,
+    handleRoute,
+    setDataTypeKey,
+} from './middleware';
 import { getRaces } from './testing/testFactories';
 
 jest.mock('node-fetch');
@@ -24,7 +30,7 @@ describe('middleware', () => {
 
     it('calls endpoint and sets values to locals', async () => {
         const { req, res } = createMocks({
-            baseUrl: '/races',
+            originalUrl: '/races',
         });
 
         await fetchData(req, res, next);
@@ -37,7 +43,7 @@ describe('middleware', () => {
 
     it('returns data from cache and does not call endpoint', async () => {
         const { req, res } = createMocks({
-            baseUrl: '/races',
+            originalUrl: '/races',
         });
 
         jest.spyOn(res, 'send');
@@ -57,7 +63,7 @@ describe('middleware', () => {
         );
 
         const { req, res } = createMocks({
-            baseUrl: '/races',
+            originalUrl: '/races',
         });
 
         jest.spyOn(res, 'send');
@@ -102,5 +108,12 @@ describe('middleware', () => {
             handler,
             returnResponse,
         ]);
+    });
+
+    it('sets data type key', () => {
+        const { req, res } = createMocks();
+        setDataTypeKey('key')(req, res, next);
+        expect(res.locals.dataTypeKey).toEqual('key');
+        expect(next).toBeCalledTimes(1);
     });
 });
