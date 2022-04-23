@@ -16,7 +16,13 @@ const app = Router();
 
 type DataType = Lap[] | PitStop[];
 
-const handler = handleRoute<RaceLapsResponse, DataType, RaceLapsKey>(
+app.get<
+    ParamsDictionary,
+    ResponseBody<DataType>,
+    void,
+    ParsedQs,
+    Locals<RaceLapsResponse, DataType, RaceLapsKey>
+>('/:lap(\\d{1,2})?/', handleRoute<RaceLapsResponse, DataType, RaceLapsKey>(
     (
         req: Request,
         res: Response<RaceLapsResponse, DataType, RaceLapsKey>,
@@ -30,21 +36,6 @@ const handler = handleRoute<RaceLapsResponse, DataType, RaceLapsKey>(
 
         next();
     },
-);
-
-app.get<
-    ParamsDictionary,
-    ResponseBody<DataType>,
-    void,
-    ParsedQs,
-    Locals<RaceLapsResponse, DataType, RaceLapsKey>
->('/', handler);
-app.get<
-    ParamsDictionary,
-    ResponseBody<DataType>,
-    void,
-    ParsedQs,
-    Locals<RaceLapsResponse, DataType, RaceLapsKey>
->('/:lap(\\d{1,2})/', handler);
+));
 
 export default app;

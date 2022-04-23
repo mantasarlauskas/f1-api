@@ -1,6 +1,6 @@
 import fetch, { Response } from 'node-fetch';
 import request from 'supertest';
-import commonRoutes from './commonRoutes';
+import commonRoutes from './common-routes';
 import {
     getCircuits,
     getConstructors,
@@ -14,7 +14,7 @@ import { setupRouter } from './testing/testUtils';
 
 jest.mock('node-fetch');
 
-describe('commonRoutes', () => {
+describe('common routes', () => {
     const app = setupRouter(commonRoutes);
     const races = getRaces();
 

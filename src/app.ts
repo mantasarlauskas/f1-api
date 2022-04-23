@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import { ParsedQs } from 'qs';
-import routes from './commonRoutes';
+import routes from './common-routes';
 import seasons from './routes/seasons';
-import raceLaps from './routes/raceLaps';
+import raceLaps from './routes/race-laps';
 import {
     RaceLapsResponse,
     Locals,

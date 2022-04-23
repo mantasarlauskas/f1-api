@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ParsedQs } from 'qs';
-import drivers from './routes/drivers';
-import constructors from './routes/constructors';
+import driverCombinations from './routes/driver-combinations';
+import constructorCombinations from './routes/constructor-combinations';
 import races from './routes/races';
 import standings from './routes/standings';
 import circuits from './routes/circuits';
@@ -64,7 +64,7 @@ app.use<
     void,
     ParsedQs,
     Locals<DriverResponse, Driver[]>
->('/drivers', drivers);
+>('/drivers', driverCombinations);
 app.use<
     ParamsDictionary,
     ResponseBody<Circuit[]>,
@@ -78,7 +78,7 @@ app.use<
     void,
     ParsedQs,
     Locals<ConstructorResponse, Constructor[]>
->('/constructors', constructors);
+>('/constructors', constructorCombinations);
 app.use<
     ParamsDictionary,
     ResponseBody<StandingsList<DriverStandings>[]>,

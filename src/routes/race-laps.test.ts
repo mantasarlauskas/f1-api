@@ -1,11 +1,11 @@
 import fetch, { Response } from 'node-fetch';
 import request from 'supertest';
-import raceLaps from './raceLaps';
+import raceLaps from './race-laps';
 import { setupRouter } from '../testing/testUtils';
 
 jest.mock('node-fetch');
 
-describe('raceLaps', () => {
+describe('race laps', () => {
     const app = setupRouter(raceLaps);
 
     beforeEach(() =>

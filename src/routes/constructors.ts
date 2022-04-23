@@ -19,7 +19,7 @@ app.get<
     ParsedQs,
     Locals<ConstructorResponse, Constructor[]>
 >(
-    '/',
+    '/:id?',
     handleRoute<ConstructorResponse, Constructor[]>(
         (
             req: Request,

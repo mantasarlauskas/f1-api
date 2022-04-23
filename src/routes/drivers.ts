@@ -19,7 +19,7 @@ app.get<
     ParsedQs,
     Locals<DriverResponse, Driver[]>
 >(
-    '/',
+    '/:id?',
     handleRoute<DriverResponse, Driver[]>(
         (
             req: Request,

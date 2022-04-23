@@ -16,14 +16,17 @@ describe('constructors', () => {
         ),
     );
 
-    it('returns constructors', async () => {
-        const res = await request(app).get('/');
-        expect(res.status).toEqual(200);
-        expect(res.body).toEqual(response.MRData.ConstructorTable.Constructors);
-    });
+    it.each([['/'], ['/mercedes']])(
+        'returns constructors',
+        async (url) => {
+            const res = await request(app).get(url);
+            expect(res.status).toEqual(200);
+            expect(res.body).toEqual(response.MRData.ConstructorTable.Constructors);
+        },
+    );
 
     it('returns 404 when route does not exist', async () => {
-        const res = await request(app).get('/route');
+        const res = await request(app).get('/route1/route2');
         expect(res.status).toEqual(404);
         expect(res.body).toEqual({});
     });
