@@ -1,4 +1,3 @@
-import fetch, { Response } from 'node-fetch';
 import request from 'supertest';
 import commonRoutes from './common-routes';
 import {
@@ -9,8 +8,8 @@ import {
     getDriverStandings,
     getRaces,
     getStatus,
-} from './testing/testFactories';
-import { setupRouter } from './testing/testUtils';
+} from '../testing/testFactories';
+import { mockResponse, setupRouter } from '../testing/testUtils';
 
 jest.mock('node-fetch');
 
@@ -18,11 +17,7 @@ describe('common routes', () => {
     const app = setupRouter(commonRoutes);
     const races = getRaces();
 
-    beforeEach(() => {
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(races)),
-        );
-    });
+    beforeEach(() => mockResponse(races));
 
     it.each([['/'], ['/results'], ['/qualifying']])(
         'returns races',
@@ -35,10 +30,7 @@ describe('common routes', () => {
 
     it('returns status', async () => {
         const status = getStatus();
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(status)),
-        );
-
+        mockResponse(status);
         const res = await request(app).get('/status');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(status.MRData.StatusTable.Status);
@@ -46,10 +38,7 @@ describe('common routes', () => {
 
     it('returns drivers', async () => {
         const drivers = getDrivers();
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(drivers)),
-        );
-
+        mockResponse(drivers);
         const res = await request(app).get('/drivers');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(drivers.MRData.DriverTable.Drivers);
@@ -57,10 +46,7 @@ describe('common routes', () => {
 
     it('returns circuits', async () => {
         const circuits = getCircuits();
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(circuits)),
-        );
-
+        mockResponse(circuits);
         const res = await request(app).get('/circuits');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(circuits.MRData.CircuitTable.Circuits);
@@ -68,10 +54,7 @@ describe('common routes', () => {
 
     it('returns constructors', async () => {
         const constructors = getConstructors();
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(constructors)),
-        );
-
+        mockResponse(constructors);
         const res = await request(app).get('/constructors');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(
@@ -81,10 +64,7 @@ describe('common routes', () => {
 
     it('returns constructor standings', async () => {
         const constructorStandings = getConstructorStandings();
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(constructorStandings)),
-        );
-
+        mockResponse(constructorStandings);
         const res = await request(app).get('/constructorStandings');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(
@@ -95,10 +75,7 @@ describe('common routes', () => {
 
     it('returns driver standings', async () => {
         const driverStandings = getDriverStandings();
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(driverStandings)),
-        );
-
+        mockResponse(driverStandings);
         const res = await request(app).get('/driverStandings');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(

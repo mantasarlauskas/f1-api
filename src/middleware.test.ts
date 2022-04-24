@@ -1,4 +1,4 @@
-import fetch, { Response } from 'node-fetch';
+import fetch from 'node-fetch';
 import { createMocks } from 'node-mocks-http';
 import {
     fetchData,
@@ -8,6 +8,7 @@ import {
     setDataTypeKey,
 } from './middleware';
 import { getRaces } from './testing/testFactories';
+import { mockResponse } from './testing/testUtils';
 
 jest.mock('node-fetch');
 
@@ -23,9 +24,7 @@ describe('middleware', () => {
 
     beforeEach(() => {
         cache.del(apiUrl);
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(response)),
-        );
+        mockResponse(response);
     });
 
     it('calls endpoint and sets values to locals', async () => {

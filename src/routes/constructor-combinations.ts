@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import { setDataTypeKey } from '../middleware';
-import { StandingsKey } from '../types';
+import {
+    ConstructorStandings,
+    StandingsKey,
+    StandingsResponse,
+} from '../types';
 import races from './races';
 import status from './status';
 import circuits from './circuits';
@@ -18,7 +22,11 @@ app.use('/:id/status', status);
 app.use('/:id/circuits', circuits);
 app.use(
     '/:id/constructorStandings',
-    setDataTypeKey(StandingsKey.CONSTRUCTORS),
+    setDataTypeKey<
+        StandingsResponse<ConstructorStandings>,
+        ConstructorStandings[],
+        StandingsKey
+    >(StandingsKey.CONSTRUCTORS),
     standings,
 );
 

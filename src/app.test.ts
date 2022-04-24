@@ -1,4 +1,3 @@
-import fetch, { Response } from 'node-fetch';
 import request from 'supertest';
 import {
     getLaps,
@@ -7,6 +6,7 @@ import {
     getSeasons,
 } from './testing/testFactories';
 import app from './app';
+import { mockResponse } from './testing/testUtils';
 
 jest.mock('node-fetch');
 
@@ -15,11 +15,7 @@ describe('app', () => {
     const laps = getLaps();
     const pitStops = getPitStops();
 
-    beforeEach(() => {
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(races)),
-        );
-    });
+    beforeEach(() => mockResponse(races));
 
     it.each([['/'], ['/2021'], ['/2021/1']])('returns races', async (url) => {
         const res = await request(app).get(url);
@@ -41,10 +37,7 @@ describe('app', () => {
 
     it('returns seasons', async () => {
         const seasons = getSeasons();
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(seasons)),
-        );
-
+        mockResponse(seasons);
         const res = await request(app).get('/seasons');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(seasons.MRData.SeasonTable.Seasons);
@@ -53,10 +46,7 @@ describe('app', () => {
     it.each([['/2021/1/laps'], ['/2021/1/laps/1']])(
         'returns laps',
         async (url) => {
-            (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-                new Response(JSON.stringify(laps)),
-            );
-
+            mockResponse(laps);
             const res = await request(app).get(url);
             expect(res.status).toEqual(200);
             expect(res.body).toEqual(laps.MRData.RaceTable.Races[0].Laps);
@@ -66,10 +56,7 @@ describe('app', () => {
     it.each([['/2021/1/pitstops'], ['/2021/1/pitstops/1']])(
         'returns pit stops',
         async (url) => {
-            (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-                new Response(JSON.stringify(pitStops)),
-            );
-
+            mockResponse(pitStops);
             const res = await request(app).get(url);
             expect(res.status).toEqual(200);
             expect(res.body).toEqual(

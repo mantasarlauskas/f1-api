@@ -1,24 +1,10 @@
 import { Router, Request, NextFunction } from 'express';
-import { ParsedQs } from 'qs';
 import { handleRoute } from '../middleware';
-import {
-    CircuitResponse,
-    Response,
-    Circuit,
-    ResponseBody,
-    Locals,
-    ParamsDictionary,
-} from '../types';
+import { CircuitResponse, Response, Circuit } from '../types';
 
 const app = Router();
 
-app.get<
-    ParamsDictionary,
-    ResponseBody<Circuit[]>,
-    void,
-    ParsedQs,
-    Locals<CircuitResponse, Circuit[]>
->(
+app.get(
     '/',
     handleRoute<CircuitResponse, Circuit[]>(
         (

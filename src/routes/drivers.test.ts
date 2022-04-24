@@ -1,8 +1,7 @@
-import fetch, { Response } from 'node-fetch';
 import request from 'supertest';
 import drivers from './drivers';
 import { getDrivers } from '../testing/testFactories';
-import { setupRouter } from '../testing/testUtils';
+import { mockResponse, setupRouter } from '../testing/testUtils';
 
 jest.mock('node-fetch');
 
@@ -10,11 +9,7 @@ describe('drivers', () => {
     const app = setupRouter(drivers);
     const response = getDrivers();
 
-    beforeEach(() =>
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify(response)),
-        ),
-    );
+    beforeEach(() => mockResponse(response));
 
     it.each([['/'], ['/hamilton']])('returns drivers', async (url) => {
         const res = await request(app).get(url);

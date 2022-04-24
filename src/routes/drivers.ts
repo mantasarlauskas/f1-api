@@ -1,24 +1,10 @@
 import { Router, Request, NextFunction } from 'express';
-import { ParsedQs } from 'qs';
 import { handleRoute } from '../middleware';
-import {
-    DriverResponse,
-    Driver,
-    Response,
-    ParamsDictionary,
-    ResponseBody,
-    Locals,
-} from '../types';
+import { DriverResponse, Driver, Response } from '../types';
 
 const app = Router();
 
-app.get<
-    ParamsDictionary,
-    ResponseBody<Driver[]>,
-    void,
-    ParsedQs,
-    Locals<DriverResponse, Driver[]>
->(
+app.get(
     '/:id?',
     handleRoute<DriverResponse, Driver[]>(
         (

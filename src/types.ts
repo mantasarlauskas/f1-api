@@ -17,10 +17,6 @@ export interface Locals<TApiResponse, TResponse, TDataTypeKey = undefined> {
     dataTypeKey?: TDataTypeKey;
 }
 
-export interface ParamsDictionary {
-    [key: string]: string;
-}
-
 export type ResponseBody<T> = T | unknown;
 
 export type Response<

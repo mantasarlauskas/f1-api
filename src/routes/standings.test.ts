@@ -1,18 +1,13 @@
-import fetch, { Response } from 'node-fetch';
 import request from 'supertest';
 import standings from './standings';
-import { setupRouter } from '../testing/testUtils';
+import { mockResponse, setupRouter } from '../testing/testUtils';
 
 jest.mock('node-fetch');
 
 describe('standings', () => {
     const app = setupRouter(standings);
 
-    beforeEach(() =>
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-            new Response(JSON.stringify({})),
-        ),
-    );
+    beforeEach(() => mockResponse({}));
 
     it('returns standings', async () => {
         const res = await request(app).get('/');

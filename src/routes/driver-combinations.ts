@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import races from './races';
 import status from './status';
-import { StandingsKey } from '../types';
+import { DriverStandings, StandingsKey, StandingsResponse } from '../types';
 import circuits from './circuits';
 import { setDataTypeKey } from '../middleware';
 import standings from './standings';
@@ -18,7 +18,11 @@ app.use('/:id/status', status);
 app.use('/:id/circuits', circuits);
 app.use(
     '/:id/driverStandings',
-    setDataTypeKey(StandingsKey.DRIVERS),
+    setDataTypeKey<
+        StandingsResponse<DriverStandings>,
+        DriverStandings[],
+        StandingsKey
+    >(StandingsKey.DRIVERS),
     standings,
 );
 
