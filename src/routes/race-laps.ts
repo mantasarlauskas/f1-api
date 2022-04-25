@@ -1,11 +1,6 @@
 import { NextFunction, Request, Router } from 'express';
-import {
-    RaceLapsResponse,
-    Response,
-    Lap,
-    PitStop,
-    RaceLapsKey,
-} from '../types';
+import { Lap, PitStop, RaceLapsKey } from 'f1-api-interfaces';
+import { RaceLapsResponse, Response } from '../types';
 import { handleRoute } from '../middleware';
 
 const app = Router();

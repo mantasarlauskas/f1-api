@@ -1,6 +1,7 @@
 import { Router, Request, NextFunction } from 'express';
+import { Driver } from 'f1-api-interfaces';
 import { handleRoute } from '../middleware';
-import { DriverResponse, Driver, Response } from '../types';
+import { DriverResponse, Response } from '../types';
 
 const app = Router();
 

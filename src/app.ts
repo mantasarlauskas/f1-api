@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
+import { Lap, PitStop, RaceLapsKey } from 'f1-api-interfaces';
 import commonRoutes from './routes/common-routes';
 import seasons from './routes/seasons';
 import raceLaps from './routes/race-laps';
-import { RaceLapsResponse, Lap, PitStop, RaceLapsKey } from './types';
+import { RaceLapsResponse } from './types';
 import { setDataTypeKey } from './middleware';
 
 const app = express();

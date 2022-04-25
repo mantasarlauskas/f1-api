@@ -1,7 +1,7 @@
 {
-  "name": "0",
+  "name": "f1-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "F1 api",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
@@ -39,6 +39,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "f1-api-interfaces": "^1.0.2",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.1",
     "qs": "^6.10.3"

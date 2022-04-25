@@ -1,6 +1,7 @@
 import { Router, Request, NextFunction } from 'express';
+import { Circuit } from 'f1-api-interfaces';
 import { handleRoute } from '../middleware';
-import { CircuitResponse, Response, Circuit } from '../types';
+import { CircuitResponse, Response } from '../types';
 
 const app = Router();
 

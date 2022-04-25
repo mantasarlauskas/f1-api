@@ -1,17 +1,26 @@
 import { Router, Request, NextFunction } from 'express';
+import {
+    ConstructorStandings,
+    DriverStandings,
+    StandingsKey,
+} from 'f1-api-interfaces';
 import { handleRoute } from '../middleware';
-import { Standings, Response, StandingsResponse, StandingsKey } from '../types';
+import { Response, StandingsResponse } from '../types';
 
 const app = Router();
 
 app.get(
     '/',
-    handleRoute<StandingsResponse<Standings>, Standings[], StandingsKey>(
+    handleRoute<
+        StandingsResponse,
+        ConstructorStandings[] | DriverStandings[],
+        StandingsKey
+    >(
         (
             req: Request,
             res: Response<
-                StandingsResponse<Standings>,
-                Standings[],
+                StandingsResponse,
+                ConstructorStandings[] | DriverStandings[],
                 StandingsKey
             >,
             next: NextFunction,

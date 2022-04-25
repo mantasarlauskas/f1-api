@@ -1,14 +1,14 @@
 import { Response as DefaultResponse } from 'express';
-
-export enum StandingsKey {
-    CONSTRUCTORS = 'ConstructorStandings',
-    DRIVERS = 'DriverStandings',
-}
-
-export enum RaceLapsKey {
-    PIT_STOPS = 'PitStops',
-    LAPS = 'Laps',
-}
+import {
+    Circuit,
+    Constructor,
+    Driver,
+    Race,
+    RaceLaps,
+    Season,
+    StandingsList,
+    Status,
+} from 'f1-api-interfaces';
 
 export interface Locals<TApiResponse, TResponse, TDataTypeKey = undefined> {
     apiUrl?: string;
@@ -28,33 +28,12 @@ export type Response<
     Locals<TApiResponse, TResponse, TDataTypeKey>
 >;
 
-interface Location {
-    lat: string;
-    long: string;
-    locality: string;
-    country: string;
-}
-
-export interface Circuit {
-    circuitId: string;
-    url: string;
-    circuitName: string;
-    Location: Location;
-}
-
 export interface CircuitResponse {
     MRData: {
         CircuitTable: {
             Circuits: Circuit[];
         };
     };
-}
-
-export interface Constructor {
-    constructorId: string;
-    url: string;
-    name: string;
-    nationality: string;
 }
 
 export interface ConstructorResponse {
@@ -65,33 +44,12 @@ export interface ConstructorResponse {
     };
 }
 
-export interface Driver {
-    driverId: string;
-    permanentNumber?: string;
-    code: string;
-    url: string;
-    givenName: string;
-    familyName: string;
-    dateOfBirth: string;
-    nationality: string;
-}
-
 export interface DriverResponse {
     MRData: {
         DriverTable: {
             Drivers: Driver[];
         };
     };
-}
-
-export interface Race {
-    season: string;
-    round: string;
-    url: string;
-    raceName: string;
-    date: string;
-    time: string;
-    Circuit: Circuit;
 }
 
 export interface RaceResponse {
@@ -102,11 +60,6 @@ export interface RaceResponse {
     };
 }
 
-export interface Season {
-    season: string;
-    url: string;
-}
-
 export interface SeasonResponse {
     MRData: {
         SeasonTable: {
@@ -115,36 +68,12 @@ export interface SeasonResponse {
     };
 }
 
-export interface Standings {
-    position: string;
-    positionText: string;
-    points: string;
-    wins: string;
-}
-
-export type StandingsList<T extends Standings> = Record<string, T[]>;
-
-export interface StandingsResponse<T extends Standings> {
+export interface StandingsResponse {
     MRData: {
         StandingsTable: {
-            StandingsLists: StandingsList<T>[];
+            StandingsLists: StandingsList[];
         };
     };
-}
-
-export interface ConstructorStandings extends Standings {
-    Constructor: Constructor;
-}
-
-export interface DriverStandings extends Standings {
-    Driver: Driver;
-    Constructors: Constructor[];
-}
-
-export interface Status {
-    statusId: string;
-    count: string;
-    status: string;
 }
 
 export interface StatusResponse {
@@ -153,30 +82,6 @@ export interface StatusResponse {
             Status: Status[];
         };
     };
-}
-
-interface Timing {
-    driverId: string;
-    position: string;
-    time: string;
-}
-
-export interface Lap {
-    number: string;
-    Timings: Timing[];
-}
-
-export interface PitStop {
-    driverId: string;
-    lap: string;
-    stop: string;
-    time: string;
-    duration: string;
-}
-
-export interface RaceLaps extends Race {
-    [RaceLapsKey.LAPS]?: Lap[];
-    [RaceLapsKey.PIT_STOPS]?: PitStop[];
 }
 
 export interface RaceLapsResponse {

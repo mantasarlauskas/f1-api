@@ -1,10 +1,7 @@
 import { Router } from 'express';
+import { ConstructorStandings, StandingsKey } from 'f1-api-interfaces';
 import { setDataTypeKey } from '../middleware';
-import {
-    ConstructorStandings,
-    StandingsKey,
-    StandingsResponse,
-} from '../types';
+import { StandingsResponse } from '../types';
 import races from './races';
 import status from './status';
 import circuits from './circuits';
@@ -22,11 +19,9 @@ app.use('/:id/status', status);
 app.use('/:id/circuits', circuits);
 app.use(
     '/:id/constructorStandings',
-    setDataTypeKey<
-        StandingsResponse<ConstructorStandings>,
-        ConstructorStandings[],
-        StandingsKey
-    >(StandingsKey.CONSTRUCTORS),
+    setDataTypeKey<StandingsResponse, ConstructorStandings[], StandingsKey>(
+        StandingsKey.CONSTRUCTORS,
+    ),
     standings,
 );
 

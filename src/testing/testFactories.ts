@@ -5,9 +5,7 @@ import {
     RaceResponse,
     SeasonResponse,
     StandingsResponse,
-    ConstructorStandings,
     StatusResponse,
-    DriverStandings,
     RaceLapsResponse,
 } from '../types';
 
@@ -360,7 +358,7 @@ export function getSeasons(): SeasonResponse {
     };
 }
 
-export function getConstructorStandings(): StandingsResponse<ConstructorStandings> {
+export function getConstructorStandings(): StandingsResponse {
     return {
         MRData: {
             StandingsTable: {
@@ -495,7 +493,7 @@ export function getConstructorStandings(): StandingsResponse<ConstructorStanding
     };
 }
 
-export function getDriverStandings(): StandingsResponse<DriverStandings> {
+export function getDriverStandings(): StandingsResponse {
     return {
         MRData: {
             StandingsTable: {
