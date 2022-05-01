@@ -323,6 +323,7 @@ export function getRaces(): RaceResponse {
                         round: '1',
                         url: 'http://en.wikipedia.org/wiki/2021_Bahrain_Grand_Prix',
                         raceName: 'Bahrain Grand Prix',
+                        Results: [],
                         Circuit: {
                             circuitId: 'bahrain',
                             url: 'http://en.wikipedia.org/wiki/Bahrain_International_Circuit',
@@ -1047,6 +1048,7 @@ export function getLaps(): RaceLapsResponse {
                         },
                         date: '2021-03-28',
                         time: '15:00:00Z',
+                        Results: [],
                         Laps: [
                             {
                                 number: '1',
@@ -1179,6 +1181,7 @@ export function getPitStops(): RaceLapsResponse {
                         },
                         date: '2021-03-28',
                         time: '15:00:00Z',
+                        Results: [],
                         PitStops: [
                             {
                                 driverId: 'perez',
