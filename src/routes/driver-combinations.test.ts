@@ -26,7 +26,7 @@ describe('driver combinations', () => {
     });
 
     it.each([['/hamilton/results'], ['/hamilton/qualifying']])(
-        'returns races',
+        'returns results',
         async (url) => {
             mockResponse(races);
             const res = await request(app).get(url);
@@ -67,8 +67,7 @@ describe('driver combinations', () => {
         const res = await request(app).get('/hamilton/driverStandings');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(
-            driverStandings.MRData.StandingsTable.StandingsLists[0]
-                .DriverStandings,
+            driverStandings.MRData.StandingsTable.StandingsLists,
         );
     });
 

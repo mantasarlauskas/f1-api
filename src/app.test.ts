@@ -17,7 +17,7 @@ describe('app', () => {
 
     beforeEach(() => mockResponse(races));
 
-    it.each([['/'], ['/2021'], ['/2021/1']])('returns races', async (url) => {
+    it.each([['/'], ['/2021'], ['/2021/1']])('returns results', async (url) => {
         const res = await request(app).get(url);
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(races.MRData.RaceTable.Races);
@@ -49,7 +49,7 @@ describe('app', () => {
             mockResponse(laps);
             const res = await request(app).get(url);
             expect(res.status).toEqual(200);
-            expect(res.body).toEqual(laps.MRData.RaceTable.Races[0].Laps);
+            expect(res.body).toEqual(laps.MRData.RaceTable.Races);
         },
     );
 
@@ -59,9 +59,7 @@ describe('app', () => {
             mockResponse(pitStops);
             const res = await request(app).get(url);
             expect(res.status).toEqual(200);
-            expect(res.body).toEqual(
-                pitStops.MRData.RaceTable.Races[0].PitStops,
-            );
+            expect(res.body).toEqual(pitStops.MRData.RaceTable.Races);
         },
     );
 

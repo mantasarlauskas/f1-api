@@ -1,17 +1,17 @@
 import request from 'supertest';
-import races from './races';
+import results from './results';
 import { getRaces } from '../testing/testFactories';
 import { mockResponse, setupRouter } from '../testing/testUtils';
 
 jest.mock('node-fetch');
 
-describe('races', () => {
-    const app = setupRouter(races);
+describe('results', () => {
+    const app = setupRouter(results);
     const response = getRaces();
 
     beforeEach(() => mockResponse(response));
 
-    it('returns races', async () => {
+    it('returns results', async () => {
         const res = await request(app).get('/');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(response.MRData.RaceTable.Races);

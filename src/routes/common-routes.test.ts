@@ -20,7 +20,7 @@ describe('common routes', () => {
     beforeEach(() => mockResponse(races));
 
     it.each([['/'], ['/results'], ['/qualifying']])(
-        'returns races',
+        'returns results',
         async (url) => {
             const res = await request(app).get(url);
             expect(res.status).toEqual(200);
@@ -68,8 +68,7 @@ describe('common routes', () => {
         const res = await request(app).get('/constructorStandings');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(
-            constructorStandings.MRData.StandingsTable.StandingsLists[0]
-                .ConstructorStandings,
+            constructorStandings.MRData.StandingsTable.StandingsLists,
         );
     });
 
@@ -79,8 +78,7 @@ describe('common routes', () => {
         const res = await request(app).get('/driverStandings');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(
-            driverStandings.MRData.StandingsTable.StandingsLists[0]
-                .DriverStandings,
+            driverStandings.MRData.StandingsTable.StandingsLists,
         );
     });
 

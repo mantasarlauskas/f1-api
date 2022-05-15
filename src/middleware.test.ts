@@ -5,7 +5,6 @@ import {
     cache,
     returnResponse,
     handleRoute,
-    setDataTypeKey,
 } from './middleware';
 import { getRaces } from './testing/testFactories';
 import { mockResponse } from './testing/testUtils';
@@ -107,12 +106,5 @@ describe('middleware', () => {
             handler,
             returnResponse,
         ]);
-    });
-
-    it('sets data type key', () => {
-        const { req, res } = createMocks();
-        setDataTypeKey('key')(req, res, next);
-        expect(res.locals.dataTypeKey).toEqual('key');
-        expect(next).toBeCalledTimes(1);
     });
 });

@@ -39,7 +39,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.3",
-    "f1-api-interfaces": "^1.0.4",
+    "f1-api-interfaces": "^1.0.6",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.1",
     "qs": "^6.10.3"

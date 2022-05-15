@@ -1,8 +1,5 @@
 import { Router } from 'express';
-import { ConstructorStandings, StandingsKey } from 'f1-api-interfaces';
-import { setDataTypeKey } from '../middleware';
-import { StandingsResponse } from '../types';
-import races from './races';
+import results from './results';
 import status from './status';
 import circuits from './circuits';
 import standings from './standings';
@@ -13,16 +10,10 @@ const app = Router();
 
 app.use('/', constructors);
 app.use('/:id/drivers', drivers);
-app.use('/:id/results', races);
-app.use('/:id/qualifying', races);
+app.use('/:id/results', results);
+app.use('/:id/qualifying', results);
 app.use('/:id/status', status);
 app.use('/:id/circuits', circuits);
-app.use(
-    '/:id/constructorStandings',
-    setDataTypeKey<StandingsResponse, ConstructorStandings[], StandingsKey>(
-        StandingsKey.CONSTRUCTORS,
-    ),
-    standings,
-);
+app.use('/:id/constructorStandings', standings);
 
 export default app;

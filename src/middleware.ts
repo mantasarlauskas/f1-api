@@ -56,23 +56,10 @@ export function returnResponse<TApiResponse, TResponse>(
     return res.status(200).send(res.locals.response);
 }
 
-export function setDataTypeKey<TApiResponse, TResponse, TDataTypeKey>(
-    dataTypeKey: TDataTypeKey,
-) {
-    return function (
-        req: Request,
-        res: Response<TApiResponse, TResponse, TDataTypeKey>,
-        next: NextFunction,
-    ) {
-        res.locals.dataTypeKey = dataTypeKey;
-        next();
-    };
-}
-
-export function handleRoute<TApiResponse, TResponse, TDataTypeKey = undefined>(
+export function handleRoute<TApiResponse, TResponse>(
     handler: (
         req: Request,
-        res: Response<TApiResponse, TResponse, TDataTypeKey>,
+        res: Response<TApiResponse, TResponse>,
         next: NextFunction,
     ) => void,
 ) {

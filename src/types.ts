@@ -3,29 +3,23 @@ import {
     Circuit,
     Constructor,
     Driver,
-    Race,
-    RaceLaps,
+    RaceInfo,
     Season,
     StandingsList,
     Status,
 } from 'f1-api-interfaces';
 
-export interface Locals<TApiResponse, TResponse, TDataTypeKey = undefined> {
+export interface Locals<TApiResponse, TResponse> {
     apiUrl?: string;
     data?: TApiResponse;
     response?: TResponse;
-    dataTypeKey?: TDataTypeKey;
 }
 
 export type ResponseBody<T> = T | unknown;
 
-export type Response<
-    TApiResponse,
-    TResponse,
-    TDataTypeKey = undefined,
-> = DefaultResponse<
+export type Response<TApiResponse, TResponse> = DefaultResponse<
     ResponseBody<TResponse>,
-    Locals<TApiResponse, TResponse, TDataTypeKey>
+    Locals<TApiResponse, TResponse>
 >;
 
 export interface CircuitResponse {
@@ -52,10 +46,10 @@ export interface DriverResponse {
     };
 }
 
-export interface RaceResponse {
+export interface ResultsResponse<T extends RaceInfo> {
     MRData: {
         RaceTable: {
-            Races: Race[];
+            Races: T[];
         };
     };
 }
@@ -68,10 +62,10 @@ export interface SeasonResponse {
     };
 }
 
-export interface StandingsResponse {
+export interface StandingsResponse<T extends StandingsList> {
     MRData: {
         StandingsTable: {
-            StandingsLists: StandingsList[];
+            StandingsLists: T[];
         };
     };
 }
@@ -80,14 +74,6 @@ export interface StatusResponse {
     MRData: {
         StatusTable: {
             Status: Status[];
-        };
-    };
-}
-
-export interface RaceLapsResponse {
-    MRData: {
-        RaceTable: {
-            Races: RaceLaps[];
         };
     };
 }

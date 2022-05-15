@@ -1,16 +1,16 @@
 import { Router, Request, NextFunction } from 'express';
-import { Race } from 'f1-api-interfaces';
+import { RaceInfo } from 'f1-api-interfaces';
 import { handleRoute } from '../middleware';
-import { RaceResponse, Response } from '../types';
+import { Response, ResultsResponse } from '../types';
 
 const app = Router();
 
 app.get(
     '/',
-    handleRoute<RaceResponse, Race[]>(
+    handleRoute<ResultsResponse<RaceInfo>, RaceInfo[]>(
         (
             req: Request,
-            res: Response<RaceResponse, Race[]>,
+            res: Response<ResultsResponse<RaceInfo>, RaceInfo[]>,
             next: NextFunction,
         ) => {
             res.locals.response =

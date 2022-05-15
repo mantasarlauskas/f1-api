@@ -1,9 +1,5 @@
 import { Router, Request, NextFunction } from 'express';
-import {
-    ConstructorStandings,
-    DriverStandings,
-    StandingsKey,
-} from 'f1-api-interfaces';
+import { StandingsList } from 'f1-api-interfaces';
 import { handleRoute } from '../middleware';
 import { Response, StandingsResponse } from '../types';
 
@@ -11,27 +7,14 @@ const app = Router();
 
 app.get(
     '/',
-    handleRoute<
-        StandingsResponse,
-        ConstructorStandings[] | DriverStandings[],
-        StandingsKey
-    >(
+    handleRoute<StandingsResponse<StandingsList>, StandingsList[]>(
         (
             req: Request,
-            res: Response<
-                StandingsResponse,
-                ConstructorStandings[] | DriverStandings[],
-                StandingsKey
-            >,
+            res: Response<StandingsResponse<StandingsList>, StandingsList[]>,
             next: NextFunction,
         ) => {
-            const key = res.locals.dataTypeKey;
-            if (key) {
-                res.locals.response =
-                    res.locals.data?.MRData?.StandingsTable
-                        ?.StandingsLists?.[0]?.[key] || [];
-            }
-
+            res.locals.response =
+                res.locals.data?.MRData?.StandingsTable?.StandingsLists || [];
             next();
         },
     ),

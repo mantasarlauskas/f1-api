@@ -28,7 +28,7 @@ describe('constructor combinations', () => {
     });
 
     it.each([['/mercedes/results'], ['/mercedes/qualifying']])(
-        'returns races',
+        'returns results',
         async (url) => {
             mockResponse(races);
             const res = await request(app).get(url);
@@ -67,8 +67,7 @@ describe('constructor combinations', () => {
         const res = await request(app).get('/mercedes/constructorStandings');
         expect(res.status).toEqual(200);
         expect(res.body).toEqual(
-            constructorStandings.MRData.StandingsTable.StandingsLists[0]
-                .ConstructorStandings,
+            constructorStandings.MRData.StandingsTable.StandingsLists,
         );
     });
 

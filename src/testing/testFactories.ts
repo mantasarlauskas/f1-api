@@ -1,12 +1,18 @@
 import {
+    ConstructorStandings,
+    DriverStandings,
+    Laps,
+    PitStops,
+    RaceResults,
+} from 'f1-api-interfaces';
+import {
     CircuitResponse,
     ConstructorResponse,
     DriverResponse,
-    RaceResponse,
+    ResultsResponse,
     SeasonResponse,
     StandingsResponse,
     StatusResponse,
-    RaceLapsResponse,
 } from '../types';
 
 export function getCircuits(): CircuitResponse {
@@ -313,7 +319,7 @@ export function getDrivers(): DriverResponse {
     };
 }
 
-export function getRaces(): RaceResponse {
+export function getRaces(): ResultsResponse<RaceResults> {
     return {
         MRData: {
             RaceTable: {
@@ -359,12 +365,14 @@ export function getSeasons(): SeasonResponse {
     };
 }
 
-export function getConstructorStandings(): StandingsResponse {
+export function getConstructorStandings(): StandingsResponse<ConstructorStandings> {
     return {
         MRData: {
             StandingsTable: {
                 StandingsLists: [
                     {
+                        season: '2021',
+                        round: '1',
                         ConstructorStandings: [
                             {
                                 position: '1',
@@ -494,12 +502,14 @@ export function getConstructorStandings(): StandingsResponse {
     };
 }
 
-export function getDriverStandings(): StandingsResponse {
+export function getDriverStandings(): StandingsResponse<DriverStandings> {
     return {
         MRData: {
             StandingsTable: {
                 StandingsLists: [
                     {
+                        season: '2021',
+                        round: '1',
                         DriverStandings: [
                             {
                                 position: '1',
@@ -1025,7 +1035,7 @@ export function getStatus(): StatusResponse {
     };
 }
 
-export function getLaps(): RaceLapsResponse {
+export function getLaps(): ResultsResponse<Laps> {
     return {
         MRData: {
             RaceTable: {
@@ -1048,7 +1058,6 @@ export function getLaps(): RaceLapsResponse {
                         },
                         date: '2021-03-28',
                         time: '15:00:00Z',
-                        Results: [],
                         Laps: [
                             {
                                 number: '1',
@@ -1158,7 +1167,7 @@ export function getLaps(): RaceLapsResponse {
     };
 }
 
-export function getPitStops(): RaceLapsResponse {
+export function getPitStops(): ResultsResponse<PitStops> {
     return {
         MRData: {
             RaceTable: {
@@ -1181,7 +1190,6 @@ export function getPitStops(): RaceLapsResponse {
                         },
                         date: '2021-03-28',
                         time: '15:00:00Z',
-                        Results: [],
                         PitStops: [
                             {
                                 driverId: 'perez',
